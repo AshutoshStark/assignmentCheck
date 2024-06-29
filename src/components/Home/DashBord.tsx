@@ -1,15 +1,26 @@
 import { useUser } from '@clerk/clerk-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { White_theme } from '../constants/constants'
+import { API_URL, White_theme } from '../constants/constants'
 import { Button } from '../../shared/UI/Button'
 import UploadPdf from './UploadPdf'
 import Checked from './Checked'
+import axios from 'axios'
 
 const DashBord = () => {
 
   const user = useUser()
-
+  const [res,setRes]= useState<any>()
+  
+    const getTeacher =async()=>{
+      return await axios.get(`${API_URL}/teacher/getTeacherById?userId=${user?.user?.primaryEmailAddress?.emailAddress}`).then((res)=>{
+        setRes(res.data)
+      })
+    }
+  
+    useEffect(()=>{
+      getTeacher()
+    },[])
 
   return (
     <MainDiv>
@@ -17,9 +28,9 @@ const DashBord = () => {
         <Heading>
         Welcome {user?.user?.firstName} 👋
       </Heading>
-      {/* <Button onClick={()=>{setUpload(upload === false ? true : false)}}>
-          {upload === false ? "Upload Assignment" : "Checked Assignments"}
-      </Button> */}
+      <Button>
+        Points - {res?.imageViews?.points}
+      </Button>
       </div>
    <Checked user={user}/>
       
