@@ -9,7 +9,7 @@ import { useUser } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const UploadPdf = ({user,id}:{user:any,id:any}) => {
+const UploadPdf = ({user,id,res}:{user:any,id:any,res:any}) => {
 
   const [marks,setMarks] = useState<any>()
   const User = useUser()
@@ -20,7 +20,7 @@ const UploadPdf = ({user,id}:{user:any,id:any}) => {
         marks:marks,
     })
     await axios.put(`${API_URL}/teacher/addpoints?teacherId=${User?.user?.primaryEmailAddress?.emailAddress}`,{
-      points:10,
+      points:(res.points+10),
     })
     Swal.fire({
       position: 'center',
@@ -32,6 +32,7 @@ const UploadPdf = ({user,id}:{user:any,id:any}) => {
     })
     navigate("/")
   }
+
 
 
   return (

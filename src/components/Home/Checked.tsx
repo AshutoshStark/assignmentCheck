@@ -111,7 +111,7 @@ const Checked = ({user}:{user:any}) => {
         }
         </tbody>
       </table>}
-      {upload === true && <UploadPdf user={url} id={id}/>}
+      {upload === true && <UploadPdf user={url} id={id} res={res}/>}
    </MainDiv>
   )
 }
